@@ -1,0 +1,17 @@
+version: "3"
+services:
+  app:
+    image: quay.io/mhausenblas/yages:0.1.0
+    container_name: app
+    ports:
+      - "9000:9000"
+  envoy:
+    image: envoyproxy/envoy-alpine:v1.21.6
+    container_name: envoy
+    ports:
+      - "8080:80"
+      - "8081:8001"
+    volumes:
+      - ./envoy.yaml:/etc/envoy/envoy.yaml
+      - ./envoy-self-cert.crt:/etc/envoy/certs/envoy-self-cert.crt
+      - ./envoy-self-cert.key:/etc/envoy/certs/envoy-self-cert.key
